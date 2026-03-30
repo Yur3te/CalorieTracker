@@ -1,0 +1,45 @@
+﻿<Window x:Class="CalorieTracker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CalorieTracker"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                <TextBlock Text="Today's meals:" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+                <DataGrid x:Name="TabelaPosilkow" AutoGenerateColumns="False" Height="350" IsReadOnly="True" Margin="0,10,0,0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Data" Binding="{Binding Data, StringFormat={}{0:dd.MM.yyyy}}"/>
+                        <DataGridTextColumn Header="Type" Binding="{Binding Type}" Width="*"/>
+                        <DataGridTextColumn Header="Product" Binding="{Binding Product}" Width="*"/>
+                        <DataGridTextColumn Header="Weight (g)" Binding="{Binding Weight}"/>
+                        <DataGridTextColumn Header="Kcal" Binding="{Binding CaloriesCalculated}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="10,0,0,0">
+                <TextBlock Text="Add a new meal:" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+
+                <TextBlock Text="Name:"/>
+                <TextBox x:Name="MealTypeTextBox" Margin="0,0,0,10"/>
+
+                <TextBlock Text="Choose product:"/>
+                <ComboBox x:Name="ProductsComboBox" Margin="0,0,0,10" DisplayMemberPath="Name" SelectedValuePath="Id"/>
+
+                <TextBlock Text="Weight (in g):"/>
+                <TextBox x:Name="WeightTextBox" Margin="0,0,0,20"/>
+
+                <Button x:Name="BtnAdd" Content="Add meal!" Height="40" Background="#4CAF50" Foreground="White" Click="BtnAdd_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

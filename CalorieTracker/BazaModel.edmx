@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CalorieTrackerDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MealItems">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MealId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="WeightInGrams" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Meals">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="MealType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Date" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CaloriesPer100g" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="DailyCalorieGoal" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__MealItems__MealI__5441852A">
+          <End Role="Meals" Type="Self.Meals" Multiplicity="1" />
+          <End Role="MealItems" Type="Self.MealItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meals">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MealItems">
+              <PropertyRef Name="MealId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MealItems__Produ__5535A963">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="MealItems" Type="Self.MealItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MealItems">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Meals__UserId__5165187F">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Meals" Type="Self.Meals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Meals">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CalorieTrackerDBModelStoreContainer">
+          <EntitySet Name="MealItems" EntityType="Self.MealItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Meals" EntityType="Self.Meals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__MealItems__MealI__5441852A" Association="Self.FK__MealItems__MealI__5441852A">
+            <End Role="Meals" EntitySet="Meals" />
+            <End Role="MealItems" EntitySet="MealItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MealItems__Produ__5535A963" Association="Self.FK__MealItems__Produ__5535A963">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="MealItems" EntitySet="MealItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Meals__UserId__5165187F" Association="Self.FK__Meals__UserId__5165187F">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Meals" EntitySet="Meals" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CalorieTrackerDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MealItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MealId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="WeightInGrams" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Meal" Relationship="Self.FK__MealItems__MealI__5441852A" FromRole="MealItems" ToRole="Meals" />
+          <NavigationProperty Name="Product" Relationship="Self.FK__MealItems__Produ__5535A963" FromRole="MealItems" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Meal">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="MealType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="MealItems" Relationship="Self.FK__MealItems__MealI__5441852A" FromRole="Meals" ToRole="MealItems" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Meals__UserId__5165187F" FromRole="Meals" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CaloriesPer100g" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MealItems" Relationship="Self.FK__MealItems__Produ__5535A963" FromRole="Products" ToRole="MealItems" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DailyCalorieGoal" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Meals" Relationship="Self.FK__Meals__UserId__5165187F" FromRole="Users" ToRole="Meals" />
+        </EntityType>
+        <Association Name="FK__MealItems__MealI__5441852A">
+          <End Role="Meals" Type="Self.Meal" Multiplicity="1" />
+          <End Role="MealItems" Type="Self.MealItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Meals">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MealItems">
+              <PropertyRef Name="MealId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__MealItems__Produ__5535A963">
+          <End Role="Products" Type="Self.Product" Multiplicity="1" />
+          <End Role="MealItems" Type="Self.MealItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MealItems">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Meals__UserId__5165187F">
+          <End Role="Users" Type="Self.User" Multiplicity="1" />
+          <End Role="Meals" Type="Self.Meal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Meals">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CalorieTrackerDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MealItems" EntityType="Self.MealItem" />
+          <EntitySet Name="Meals" EntityType="Self.Meal" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__MealItems__MealI__5441852A" Association="Self.FK__MealItems__MealI__5441852A">
+            <End Role="Meals" EntitySet="Meals" />
+            <End Role="MealItems" EntitySet="MealItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__MealItems__Produ__5535A963" Association="Self.FK__MealItems__Produ__5535A963">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="MealItems" EntitySet="MealItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Meals__UserId__5165187F" Association="Self.FK__Meals__UserId__5165187F">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Meals" EntitySet="Meals" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CalorieTrackerDBModelStoreContainer" CdmEntityContainer="CalorieTrackerDBEntities">
+          <EntitySetMapping Name="MealItems">
+            <EntityTypeMapping TypeName="CalorieTrackerDBModel.MealItem">
+              <MappingFragment StoreEntitySet="MealItems">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MealId" ColumnName="MealId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="WeightInGrams" ColumnName="WeightInGrams" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Meals">
+            <EntityTypeMapping TypeName="CalorieTrackerDBModel.Meal">
+              <MappingFragment StoreEntitySet="Meals">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="MealType" ColumnName="MealType" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="CalorieTrackerDBModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CaloriesPer100g" ColumnName="CaloriesPer100g" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="CalorieTrackerDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="DailyCalorieGoal" ColumnName="DailyCalorieGoal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
