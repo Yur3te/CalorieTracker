@@ -17,11 +17,12 @@ namespace CalorieTracker
 {
     public partial class MainWindow : Window
     {
-        private int LoggedUserId = 1;
+        private int LoggedUserId;
 
-        public MainWindow()
+        public MainWindow(int userId)
         {
             InitializeComponent();
+            LoggedUserId = userId;
             LoadData();
         }
 
