@@ -37,6 +37,7 @@ namespace CalorieTracker
                     .OrderByDescending(mi => mi.Meal.Date)
                     .Select(mi => new
                     {
+                        Id = mi.Id,
                         Data = mi.Meal.Date,
                         Type = mi.Meal.MealType,
                         Product = mi.Product.Name,
@@ -45,11 +46,38 @@ namespace CalorieTracker
                     })
                     .ToList();
 
-                TabelaPosilkow.ItemsSource = dataToTable;
+                MealsDataGrid.ItemsSource = dataToTable;
             }
         }
 
-        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow login = new LoginWindow();
+            login.Show();
+            this.Close();
+        }
+
+        private void DeleteMealButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (MealsDataGrid.SelectedItem != null)
+            {
+                dynamic selected = MealsDataGrid.SelectedItem;
+                int idToDelete = selected.Id;
+
+                using (var db = new CalorieTrackerDBEntities())
+                {
+                    var item = db.MealItems.Find(idToDelete);
+                    if (item != null)
+                    {
+                        db.MealItems.Remove(item);
+                        db.SaveChanges();
+                        LoadData();
+                    }
+                }
+            }
+        }
+
+        private void AddMealButton_Click(object sender, RoutedEventArgs e)
         {
             using (var db = new CalorieTrackerDBEntities())
             {
