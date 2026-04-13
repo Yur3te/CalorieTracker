@@ -8,16 +8,32 @@
         mc:Ignorable="d"
         Title="LoginWindow" Height="450" Width="800">
     <Grid>
-        <StackPanel Width="200" VerticalAlignment="Center">
-            <TextBlock Text="Please log in" FontWeight="Bold" FontSize="16" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+        <StackPanel x:Name="LoginPanel" Width="250" VerticalAlignment="Center" Visibility="Visible">
+        <TextBlock Text="Login to your account" FontWeight="Bold" FontSize="18" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+        
+        <TextBlock Text="Username:"/>
+        <TextBox x:Name="LoginUsernameTextBox" Margin="0,0,0,15"/>
+        
+        <TextBlock Text="Password:"/>
+        <PasswordBox x:Name="LoginPasswordBox" Margin="0,0,0,25"/>
+        
+        <Button x:Name="LoginButton" Content="LOGIN" Height="35" Click="LoginButton_Click"/>
+        
+        <Button Content="Don't have an account? Register" Background="Transparent" BorderThickness="0" Foreground="Blue" Margin="0,15,0,0" Click="ShowRegisterPanel_Click"/>
+    </StackPanel>
 
-            <TextBlock Text="Login:"/>
-            <TextBox x:Name="LoginTextBox" Margin="0,0,0,10"/>
-
-            <TextBlock Text="Password:"/>
-            <PasswordBox x:Name="PasswordTextBox" Margin="0,0,0,20"/>
-
-            <Button x:Name="BtnLogin" Content="Log in" Height="30" Click="BtnLogin_Click"/>
-        </StackPanel>
+    <StackPanel x:Name="RegisterPanel" Width="250" VerticalAlignment="Center" Visibility="Collapsed">
+        <TextBlock Text="Create new account" FontWeight="Bold" FontSize="18" Margin="0,0,0,20" HorizontalAlignment="Center"/>
+        
+        <TextBlock Text="New Username:"/>
+        <TextBox x:Name="RegisterUsernameTextBox" Margin="0,0,0,15"/>
+        
+        <TextBlock Text="New Password:"/>
+        <PasswordBox x:Name="RegisterPasswordBox" Margin="0,0,0,25"/>
+        
+        <Button x:Name="RegisterButton" Content="REGISTER" Height="35" Background="#4CAF50" Foreground="White" Click="RegisterButton_Click"/>
+        
+        <Button Content="Already have an account? Login" Background="Transparent" BorderThickness="0" Foreground="Blue" Margin="0,15,0,0" Click="ShowLoginPanel_Click"/>
+    </StackPanel>
     </Grid>
 </Window>
