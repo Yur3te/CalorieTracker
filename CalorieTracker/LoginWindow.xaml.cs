@@ -27,6 +27,12 @@ namespace CalorieTracker
             string username = LoginUsernameTextBox.Text;
             string password = LoginPasswordBox.Password;
 
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("Username and password cannot be empty.", "Validation Error");
+                return;
+            }
+
             using (var db = new CalorieTrackerDBEntities())
             {
                 var user = db.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
