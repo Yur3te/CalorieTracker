@@ -20,43 +20,72 @@
 
     <TabControl Grid.Row="1">
         <TabItem Header="Daily Tracking">
-            <Grid Margin="10">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.5*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                <StackPanel Grid.Column="0" Margin="0,0,10,0">
-                    <TextBlock Text="Today's Meals" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
-                    <DataGrid x:Name="MealsDataGrid" AutoGenerateColumns="False" Height="400" IsReadOnly="True">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Meal Type" Binding="{Binding Type}" Width="*"/>
-                            <DataGridTextColumn Header="Product" Binding="{Binding Product}" Width="*"/>
-                            <DataGridTextColumn Header="Weight" Binding="{Binding Weight}"/>
-                            <DataGridTextColumn Header="Calories" Binding="{Binding CaloriesCalculated}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <Button x:Name="DeleteMealButton" Content="Delete Selected" Background="#E91E63" Foreground="White" Margin="0,10,0,0" Click="DeleteMealButton_Click"/>
-                </StackPanel>
+                    <StackPanel Grid.Row="0" Margin="0,0,0,10">
 
-                <StackPanel Grid.Column="1">
-                    <TextBlock Text="Add Meal" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
-                    <TextBlock Text="Type:"/>
-                    <TextBox x:Name="MealTypeTextBox" Margin="0,0,0,10"/>
-                    <TextBlock Text="Select Product:"/>
-                    <ComboBox x:Name="ProductsComboBox" DisplayMemberPath="Name" SelectedValuePath="Id" Margin="0,0,0,10"/>
-                    <TextBlock Text="Weight (g):"/>
-                    <TextBox x:Name="WeightTextBox" Margin="0,0,0,20"/>
-                    <Button x:Name="AddMealButton" Content="Add to Journal" Height="40" Background="#4CAF50" Foreground="White" Click="AddMealButton_Click"/>
-                </StackPanel>
-            </Grid>
-        </TabItem>
+                        <Grid Margin="0,0,0,10">
+                            <TextBlock Text="Daily Journal" FontWeight="Bold" FontSize="16" VerticalAlignment="Center"/>
+                            <DatePicker x:Name="MainDatePicker" HorizontalAlignment="Right" Width="150" SelectedDateChanged="MainDatePicker_SelectedDateChanged"/>
+                        </Grid>
+
+                        <DataGrid x:Name="MealsDataGrid" AutoGenerateColumns="False" Height="360" IsReadOnly="True" HorizontalAlignment="Stretch">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Product" Binding="{Binding Product}" Width="*"/>
+                                <DataGridTextColumn Header="Weight (g)" Binding="{Binding Weight}" Width="100"/>
+                                <DataGridTextColumn Header="Calories" Binding="{Binding CaloriesCalculated}" Width="100"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+                            <TextBlock Text="Total Calories for this day: " FontSize="14" FontWeight="Bold"/>
+                            <TextBlock x:Name="TotalCaloriesText" Text="0" FontSize="14" FontWeight="Bold" Foreground="#3F51B5"/>
+                        </StackPanel>
+                        
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button x:Name="DeleteMealButton" Content="DELETE SELECTED" Background="#E91E63" Foreground="White" Width="140" Height="40" Margin="0,0,10,0" Click="DeleteMealButton_Click"/>
+                        <Button x:Name="EditMealButton" Content="EDIT" Background="#FF9800" Foreground="White" Width="100" Height="40" Margin="0,0,10,0" Click="EditMealButton_Click"/>
+                        <Button x:Name="AddMealButton" Content="ADD NEW" Background="#4CAF50" Foreground="White" Width="120" Height="40" Click="AddMealButton_Click"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
 
         <TabItem Header="Product Manager">
-            <Grid Margin="10">
-                <TextBlock Text="Why do Java developers wear glasses? Because they can't C#" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Foreground="Gray"/>
-            </Grid>
-        </TabItem>
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                        <DataGrid x:Name="ProductsDataGrid" AutoGenerateColumns="False" IsReadOnly="True" Height="320" Margin="0,0,0,10">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Product Name" Binding="{Binding Name}" Width="*"/>
+                                <DataGridTextColumn Header="Kcal (per 100g)" Binding="{Binding CaloriesPer100g}" Width="120"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Button x:Name="DeleteProductButton" Content="DELETE SELECTED" Background="#E91E63" Foreground="White" Width="150" HorizontalAlignment="Left" Click="DeleteProductButton_Click"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Text="Add New Product" FontWeight="Bold" FontSize="16" Margin="0,0,0,10"/>
+
+                        <TextBlock Text="Product Name:"/>
+                        <TextBox x:Name="NewProductNameTextBox" Margin="0,0,0,10" Padding="5"/>
+
+                        <TextBlock Text="Calories per 100g:"/>
+                        <TextBox x:Name="NewProductKcalTextBox" Margin="0,0,0,20" Padding="5"/>
+
+                        <Button x:Name="AddProductButton" Content="ADD TO DATABASE" Background="#4CAF50" Foreground="White" Height="40" Click="AddProductButton_Click"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
     </TabControl>
 </Grid>
 </Window>
